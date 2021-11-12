@@ -1,20 +1,16 @@
 import axios from "axios";
 import React, { useState, useEffect, Fragment, useRef } from "react";
-import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./Transaction.scss";
 import List from "../../components/Transaction/List";
-import TransactionDetail from "./TransactionDetail/TransactionDetail";
-import asd from "../asd/Transaction";
 
 export default function Transaction() {
   const [trList, getTrList] = useState([]);
   const [totalTransaksi, getTotalTransaksi] = useState(0);
-  const [trListData, getTrListData] = useState([]);
   const [toggleSort, setToggleSort] = useState(false);
-  // const [sortList, setSortList] = useState("");
-
-  let total = 0;
   const trxBoxSort = useRef(null);
+  const history = useHistory();
+  let total = 0;
 
   const formatCurrency = new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -22,11 +18,8 @@ export default function Transaction() {
     maximumFractionDigits: 0,
   });
 
-  const history = useHistory();
-
   const handleDetail = (id) => {
-    console.log(id);
-    // history.push(`/detail/${id}`);
+    history.push(`/detail/${id}`);
   };
 
   const handleSort = () => {
@@ -35,7 +28,6 @@ export default function Transaction() {
   };
 
   const sortList = (data) => {
-    console.log(trListData);
     const promise = new Promise((resolve, reject) => {
       axios.get("https://nextar.flip.id/frontend-test").then(
         (result) => {
@@ -47,7 +39,7 @@ export default function Transaction() {
                 ? -1
                 : 0
             );
-            getTrListData(data_result);
+            getTrList(data_result);
           } else if (data === "ZA") {
             const data_result = Object.entries(result.data).sort((a, b) =>
               a.beneficiary_name < b.beneficiary_name
@@ -56,7 +48,7 @@ export default function Transaction() {
                 ? -1
                 : 0
             );
-            getTrListData(data_result);
+            getTrList(data_result);
           }
           resolve(result.data);
         },
@@ -73,18 +65,16 @@ export default function Transaction() {
       axios.get("https://nextar.flip.id/frontend-test").then(
         (result) => {
           const data = result.data;
-          getTrList(data);
-          getTrListData(Object.entries(result.data));
           if (search) {
-            const data_result = Object.entries(result.data).filter(
+            const data_result = Object.entries(data).filter(
               ([idx, res]) =>
                 res.beneficiary_name.toLowerCase().indexOf(search) !== -1 ||
                 res.beneficiary_bank.toLowerCase().indexOf(search) !== -1 ||
                 res.sender_bank.toLowerCase().indexOf(search) !== -1
             );
-            getTrListData(data_result);
+            getTrList(data_result);
           } else {
-            getTrList(data);
+            getTrList(Object.entries(data));
           }
           total = Object.entries(data)
             .map(([idx, res]) => {
@@ -92,7 +82,7 @@ export default function Transaction() {
             })
             .reduce((partial_sum, a) => partial_sum + a, 0);
           getTotalTransaksi(total);
-          resolve(result.data);
+          resolve(data);
         },
         (err) => {
           reject(err);
@@ -108,11 +98,6 @@ export default function Transaction() {
 
   return (
     <Fragment>
-      <Router>
-        <Route path="/detail/:trxId" exact component={TransactionDetail} />
-        <Route path="/asd" exact component={asd} />
-      </Router>
-
       <div className="container trx">
         <h1 className="trx-title">Daftar Transaksi</h1>
         <h4 className="trx-greeting">Halo Kak!</h4>
@@ -142,7 +127,7 @@ export default function Transaction() {
           </div>
         </div>
         <ul className="trx-list">
-          {trListData.map(([idx, result]) => {
+          {trList.map(([idx, result]) => {
             return <List key={idx} data={result} goDetail={handleDetail} />;
           })}
         </ul>

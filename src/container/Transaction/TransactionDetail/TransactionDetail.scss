@@ -1,0 +1,94 @@
+@import "../../../container/main.scss";
+
+.detail-trx {
+  &-title {
+    text-align: center;
+    font-weight: 400;
+    font-size: 40px;
+    margin-bottom: 2rem;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  &-header,
+  &-info {
+    background-color: #fff;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  &-header {
+    border-radius: 8px;
+    display: flex;
+
+    &-id {
+      line-height: 30px;
+    }
+
+    &-status {
+      margin-left: auto;
+      order: 2;
+      border-radius: 4px;
+      display: block;
+      width: 100px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+
+      &.SUCCESS {
+        background-color: $green;
+        color: #fff;
+      }
+
+      &.PENDING {
+        border: 1px solid $orange;
+      }
+    }
+  }
+
+  &-info {
+    display: flex;
+
+    .fa-inbox {
+      font-size: 40px;
+      margin-right: 16px;
+      color: $orange;
+    }
+
+    &-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 0;
+
+      li {
+        margin-bottom: 16px;
+
+        p {
+          line-height: 1.5;
+
+          span {
+            font-weight: 700;
+          }
+        }
+      }
+
+      &-title {
+        font-weight: 700;
+      }
+    }
+  }
+
+  &-button {
+    border: 1px solid $orange;
+    background-color: transparent;
+    padding: 8px 16px;
+    border-radius: 4px;
+    color: $orange;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
