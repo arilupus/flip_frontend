@@ -1,0 +1,69 @@
+@import "../../container/main.scss";
+
+.tr-list {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 16px 24px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &-border-orange {
+    border-left: 10px solid $orange;
+  }
+
+  &-border-green {
+    border-left: 10px solid $green;
+  }
+
+  &-info {
+    > p {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    &-bank {
+      font-weight: 700;
+
+      .fa-arrow-right {
+        padding: 0 4px;
+        font-size: 14px;
+      }
+    }
+
+    &-amount {
+      .fa-circle {
+        padding: 0 8px;
+        font-size: 6px;
+      }
+    }
+  }
+
+  &-status {
+    margin-left: auto;
+    order: 2;
+
+    span {
+      border-radius: 4px;
+      display: block;
+      width: 100px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+    }
+
+    &-SUCCESS {
+      background-color: $green;
+      color: #fff;
+    }
+
+    &-PENDING {
+      border: 1px solid $orange;
+    }
+  }
+}

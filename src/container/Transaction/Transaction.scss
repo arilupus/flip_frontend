@@ -1,0 +1,116 @@
+@import "../main.scss";
+
+.trx {
+  &-title {
+    text-align: center;
+    font-weight: 400;
+    font-size: 40px;
+    margin-bottom: 2rem;
+  }
+
+  &-greeting {
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 0.5rem;
+  }
+
+  &-desc {
+    margin-top: 0;
+    margin-bottom: 1rem;
+
+    span {
+      font-weight: 700;
+      color: $orange;
+    }
+  }
+
+  &-box {
+    border: 1px inset #222;
+    background-color: #fff;
+    display: flex;
+    margin-bottom: 2rem;
+
+    > div {
+      position: relative;
+
+      .fas {
+        top: 12px;
+      }
+    }
+
+    &-search {
+      width: 75%;
+      border-right: 1px inset #222;
+
+      input[type="search"] {
+        width: 100%;
+        height: 40px;
+        padding-left: 40px;
+        padding-right: 12px;
+        border: none;
+
+        &:focus-visible {
+          outline: none;
+        }
+      }
+
+      .fa-search {
+        position: absolute;
+        left: 12px;
+      }
+    }
+
+    &-sort {
+      width: 25%;
+      padding-left: 12px;
+      height: 40px;
+      ul {
+        list-style: none;
+        overflow: hidden;
+        padding: 0;
+        text-align: center;
+        position: absolute;
+        margin: 8px 0 0 -12px;
+        width: 100%;
+        background-color: #fff;
+        border: 1px solid #222;
+
+        &.closed {
+          display: none;
+        }
+
+        span {
+          line-height: 40px;
+        }
+
+        li {
+          line-height: 2;
+
+          &:hover {
+            background-color: rgba(253, 101, 66, .3);
+          }
+          &:first-child {
+            position: relative;
+
+            .fa-angle-down {
+              color: $orange;
+              position: absolute;
+              top: 12px;
+              right: 12px;
+            }
+          }
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  &-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+  }
+}
