@@ -78,7 +78,7 @@ const List = (props) => {
   return (
     <li
       className={`tr-list ${border}`}
-      onClick={() => props.goDetail(props.data.id)}
+      onClick={() => props.goDetail(props.data.id, props.data)}
     >
       <div className="tr-list-info">
         <p className="tr-list-info-bank">

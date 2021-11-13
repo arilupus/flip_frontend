@@ -1,9 +1,14 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { globalAction } from "../../../redux/globalAction";
 import "./TransactionDetail.scss";
 
 const TransactionDetail = (props) => {
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state?.data.data);
+  console.log("data", data);
   const [detailData, getDetailData] = useState([]);
   const [tglBuat, getTglBuat] = useState([]);
   const trxId = props.match.params.trxId;
@@ -68,20 +73,20 @@ const TransactionDetail = (props) => {
   };
 
   useEffect(() => {
-    getTrDetail();
+    dispatch(globalAction.getDetail());
   }, []);
 
   return (
     <div className="container detail-trx">
       <h1 className="detail-trx-title">Daftar Transaksi</h1>
       <div className="detail-trx-header">
-        <p className="detail-trx-header-id">ID TRANSAKSI: #{detailData.id}</p>
+        <p className="detail-trx-header-id">ID TRANSAKSI: #{data.id}</p>
         <span
           className={`detail-trx-header-status ${
-            detailData.status === "SUCCESS" ? "SUCCESS" : "PENDING"
+            data.status === "SUCCESS" ? "SUCCESS" : "PENDING"
           }`}
         >
-          {detailData.status === "SUCCESS" ? "Berhasil" : "Pengecekan"}
+          {data.status === "SUCCESS" ? "Berhasil" : "Pengecekan"}
         </span>
       </div>
       <div className="detail-trx-info">
@@ -90,40 +95,40 @@ const TransactionDetail = (props) => {
           <li>
             <p className="detail-trx-info-list-title">PENGIRIM</p>
             <p className="detail-trx-info-list-content">
-              {detailData.sender_bank.length === 3 ||
-              detailData.sender_bank.length === 4
-                ? detailData.sender_bank.toUpperCase()
-                : detailData.sender_bank.charAt(0).toUpperCase() +
-                  detailData.sender_bank.slice(1)}
+              {data.sender_bank.length === 3 ||
+              data.sender_bank.length === 4
+                ? data.sender_bank.toUpperCase()
+                : data.sender_bank.charAt(0).toUpperCase() +
+                  data.sender_bank.slice(1)}
             </p>
           </li>
           <li>
             <p className="detail-trx-info-list-title">PENERIMA</p>
             <div className="detail-trx-info-list-content">
               <p>
-                {detailData.beneficiary_bank.length === 3 ||
-                detailData.beneficiary_bank.length === 4
-                  ? detailData.beneficiary_bank.toUpperCase()
-                  : detailData.beneficiary_bank.charAt(0).toUpperCase() +
-                    detailData.beneficiary_bank.slice(1)}
+                {data.beneficiary_bank.length === 3 ||
+                data.beneficiary_bank.length === 4
+                  ? data.beneficiary_bank.toUpperCase()
+                  : data.beneficiary_bank.charAt(0).toUpperCase() +
+                    data.beneficiary_bank.slice(1)}
               </p>
-              <p>{detailData.account_number}</p>
-              <p>{detailData.beneficiary_name}</p>
+              <p>{data.account_number}</p>
+              <p>{data.beneficiary_name}</p>
             </div>
           </li>
           <li>
             <p className="detail-trx-info-list-title">NOMINAL</p>
             <div className="detail-trx-info-list-content">
-              <p>{formatCurrency.format(detailData.amount)}</p>
+              <p>{formatCurrency.format(data.amount)}</p>
               <p>
                 <span>Kode Unik: </span>
-                {detailData.unique_code}
+                {data.unique_code}
               </p>
             </div>
           </li>
           <li>
             <p className="detail-trx-info-list-title">CATATAN</p>
-            <p className="detail-trx-info-list-content">{detailData.remark}</p>
+            <p className="detail-trx-info-list-content">{data.remark}</p>
           </li>
           <li>
             <p className="detail-trx-info-list-title">WAKTU DIBUAT</p>

@@ -3,12 +3,15 @@ import React, { useState, useEffect, Fragment, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import "./Transaction.scss";
 import List from "../../components/Transaction/List";
+import { useDispatch } from "react-redux";
+import { globalAction } from "../../redux/globalAction";
 
 export default function Transaction() {
   const [trList, getTrList] = useState([]);
   const [totalTransaksi, getTotalTransaksi] = useState(0);
   const [toggleSort, setToggleSort] = useState(false);
   const trxBoxSort = useRef(null);
+  const dispatch = useDispatch();
   const history = useHistory();
   let total = 0;
 
@@ -18,7 +21,8 @@ export default function Transaction() {
     maximumFractionDigits: 0,
   });
 
-  const handleDetail = (id) => {
+  const handleDetail = (id, data) => {
+    dispatch(globalAction.getDetail(data));
     history.push(`/detail/${id}`);
   };
 
